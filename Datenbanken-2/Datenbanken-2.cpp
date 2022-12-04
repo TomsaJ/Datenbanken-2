@@ -31,6 +31,7 @@ void laden(DBSim* obj)
     //    clearBuffer();
     string fileName = "test.txt";
     obj->loadFile(fileName);
+    //cout << MyHash{}(obj->hashspeicherung()) << endl;
 }
 
 /** \brief Speichert die Datenbank in eine Datei, dessen Name vom Nutzer bestimmt wird

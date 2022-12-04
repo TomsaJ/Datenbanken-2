@@ -10,13 +10,19 @@
 #include <fstream>
 #include <algorithm>
 #include <thread>
+#include <iomanip>
+#include <functional>
+#include <memory_resource>
+#include <unordered_set>
+
+using  std::string;
 
 struct buch
 {
     char autor[21];
     char titel[41];
     char verlagsname[21];
-    int erscheinungsjahr;
+    char erscheinungsjahr[4];
     char erscheinungsort[41];
     char isbn[15];
 };
@@ -25,6 +31,20 @@ struct index
 {
     char ordnungsbegriff[21];
     int position;
+};
+
+struct MyHash
+{
+    std::size_t operator()(buch const& b) const noexcept
+    {
+        std::size_t h1 = std::hash<std::string>{}(b.autor);
+        std::size_t h2 = std::hash<std::string>{}(b.titel);
+        std::size_t h3 = std::hash<std::string>{}(b.verlagsname);
+        std::size_t h4 = std::hash<std::string>{}(b.erscheinungsjahr);
+        std::size_t h5 = std::hash<std::string>{}(b.erscheinungsort);
+        std::size_t h6 = std::hash<std::string>{}(b.isbn);
+        return h1 ^ (h2 << 1) ^ (h3 << 2); // or use boost::hash_combine
+    }
 };
 
 class DBSim
@@ -38,6 +58,7 @@ public:
     void saveFile(std::string Filename);
     void sortIndexArray();
     void sortIndexArrayRevers();
+    void hashspeicherung();
     void print();
     bool noTable() { return dbTable == nullptr; }
     bool noIndex() { return indexTable == nullptr; }

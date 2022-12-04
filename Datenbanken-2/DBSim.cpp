@@ -86,6 +86,15 @@ void DBSim::printLine(int i)
         << std::endl;
 }
 
+void DBSim::hashspeicherung()
+{
+    for (int i = 0; i < dbEintraege; i++)
+    {
+        buch ob = { "Alpha", "Beta" };
+            //getLineFromTable(indexTable[i].position);
+    }
+}
+
 /** \brief gibt den inhalt der datenbank aus
  *
  * \return void
@@ -110,7 +119,7 @@ void DBSim::print()
 std::string DBSim::getLineFromTable(int i)
 {
     if ((i >= dbEintraege) || (i < 0)) throw "index out of bounds";
-    return (std::string)dbTable[i].autor + "," + std::to_string(dbTable[i].erscheinungsjahr) + "," + dbTable[i].erscheinungsort + "," + dbTable[i].isbn + "," + dbTable[i].titel + "," + dbTable[i].verlagsname;
+    return (std::string)dbTable[i].autor + "," + (std::string)dbTable[i].erscheinungsjahr + "," + dbTable[i].erscheinungsort + "," + dbTable[i].isbn + "," + dbTable[i].titel + "," + dbTable[i].verlagsname;
 }
 
 /** \brief sucht nach einem author und gibt die ergebnisse aus
@@ -160,7 +169,7 @@ void DBSim::writeStringToTable(std::string line, int index)
         values.push_back(temp);
     }
     strcpy(dbTable[index].autor, values[0].c_str());
-    dbTable[index].erscheinungsjahr = atoi(values[1].c_str());
+    //strcpy(dbTable[index].erscheinungsjahr = atoi(values[1].c_str());
     strcpy(dbTable[index].erscheinungsort, values[2].c_str());
     strcpy(dbTable[index].isbn, values[3].c_str());
     strcpy(dbTable[index].titel, values[4].c_str());
