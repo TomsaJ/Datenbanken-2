@@ -8,43 +8,31 @@
 #include <cstring>
 #include <sstream>
 #include <fstream>
-#include <algorithm>
-#include <thread>
-#include <iomanip>
-#include <functional>
-#include <memory_resource>
-#include <unordered_set>
-
-using  std::string;
+using namespace std;
 
 struct buch
 {
-    char autor[21];
-    char titel[41];
+    char autor[40];
+    char titel[200];
     char verlagsname[21];
-    char erscheinungsjahr[4];
+    int erscheinungsjahr;
     char erscheinungsort[41];
     char isbn[15];
+    int key;
 };
 
 struct index
 {
     char ordnungsbegriff[21];
+    struct block* address;
     int position;
 };
 
-struct MyHash
+struct block
 {
-    std::size_t operator()(buch const& b) const noexcept
-    {
-        std::size_t h1 = std::hash<std::string>{}(b.autor);
-        std::size_t h2 = std::hash<std::string>{}(b.titel);
-        std::size_t h3 = std::hash<std::string>{}(b.verlagsname);
-        std::size_t h4 = std::hash<std::string>{}(b.erscheinungsjahr);
-        std::size_t h5 = std::hash<std::string>{}(b.erscheinungsort);
-        std::size_t h6 = std::hash<std::string>{}(b.isbn);
-        return h1 ^ (h2 << 1) ^ (h3 << 2); // or use boost::hash_combine
-    }
+    buch data[5];
+    block* overflowBlock;
+    int n;
 };
 
 class DBSim
@@ -57,21 +45,32 @@ public:
     void loadFile(std::string Filename);
     void saveFile(std::string Filename);
     void sortIndexArray();
-    void sortIndexArrayRevers();
-    void hashspeicherung();
     void print();
-    bool noTable() { return dbTable == nullptr; }
+    void printStructure();
+    void sucheKey(int key);
+    int hashBerechnen(int n);
+    void ausgabeDaten(block* curr, int n);
+    void ausgabeTitel();
+    void datensatzInDatenarray(std::string line);
+    int getHash(int);
+    bool noTable() { return dbEntries < 0; }
     bool noIndex() { return indexTable == nullptr; }
+    int getSize() { return dbEntries; }
 
 protected:
 
 private:
-    std::string getLineFromTable(int i);
     index* indexTable;
-    buch* dbTable;
-    int dbEintraege;
-    void writeStringToTable(std::string line, int index);
-    void printLine(int i);
+    block* blockarray;
+    int dbEntries;
+
+    void clearOFBlocks(struct block*);
+    void clearTable();
+
+    std::string getLineFromTable(block*, int);
+    void writeStringToTable(std::string line);
+    void printLine(block*, int);
+
 };
 
 #endif // DBSIM_H
