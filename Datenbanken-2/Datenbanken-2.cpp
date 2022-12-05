@@ -1,3 +1,13 @@
+/**
+ * @file Datenbanken-2.cpp
+ * @author Julian Maximilian Tomsa
+ * @brief 
+ * @version 1.1
+ * @date 2022-12-05
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #pragma warning(disable : 4996)
 #include <iostream>
 #include "DBSim.h"
