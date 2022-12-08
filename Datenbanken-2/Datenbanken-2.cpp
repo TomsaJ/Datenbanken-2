@@ -1,3 +1,13 @@
+/**
+ * @file Datenbanken-2.cpp
+ * @author Julian Maximilian Tomsa
+ * @brief 
+ * @version 1.1
+ * @date 2022-12-05
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #pragma warning(disable : 4996)
 #include <iostream>
 #include "DBSim.h"
@@ -31,7 +41,10 @@ void laden(DBSim* obj)
     //    clearBuffer();
     string fileName = "test.txt";
     obj->loadFile(fileName);
+    //cout << MyHash{}(obj->hashspeicherung()) << endl;
 }
+
+
 
 /** \brief Speichert die Datenbank in eine Datei, dessen Name vom Nutzer bestimmt wird
  *
@@ -58,6 +71,13 @@ void suchen(DBSim* obj)
     obj->searchAuthor(suchBegriff);
 }
 
+void suchekey(DBSim* obj)
+{
+    cout << "Key:" << endl;
+    string suchBegriff = readLine();
+    obj->sucheKey(atoi(suchBegriff.c_str()));
+}
+
 int main()
 {
     try
@@ -75,6 +95,7 @@ int main()
                 << "4. Indexarray sortieren" << endl
                 << "5. DB ausgeben" << endl
                 << "6. Autor suchen" << endl
+                << "8. Key suchen" << endl
                 << "9. Beenden" << endl
                 << ((sim.noTable()) ? "Keine Tabelle\n" : "")
                 << ((sim.noIndex()) ? "Kein Index\n" : "");
@@ -114,6 +135,10 @@ int main()
                     break;
                 case '6':
                     suchen(&sim);
+                    system("pause");
+                    break;
+                case '8':
+                    suchekey(&sim);
                     system("pause");
                     break;
                 case '9':
