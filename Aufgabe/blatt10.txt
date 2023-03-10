@@ -1,0 +1,37 @@
+
+Avg fetch time = 21,62 ms
+CREATE TABLE BENCH_3 (
+ ID1 CHAR(50) NOT NULL,
+ SP1 VARCHAR(50),
+ SP2 INTEGER
+);
+
+create index ix_sp1 on bench_3 (id1,sp1,sp2);
+
+Prepare time = 32ms
+Execute time = 140ms
+Avg fetch time = 5,38 ms
+Current memory = 36.722.192
+Max memory = 65.876.192
+Memory buffers = 2.048
+Reads from disk to cache = 0
+Writes from cache to disk = 0
+Fetches from cache = 305.580
+
+Prepare time = 31ms
+Execute time = 0ms
+Avg fetch time = 0,00 ms
+Current memory = 36.674.368
+Max memory = 65.876.192
+Memory buffers = 2.048
+Reads from disk to cache = 0
+Writes from cache to disk = 0
+Fetches from cache = 338
+
+SQL Index funktioniert wie ein Begriffsregister.In regulären SQL-Abfragen wird allerdings jede Zeile nach Übereinstimmungen geprüft. 
+Erstellt man hingegen einen SQL Index, entsteht genauso ein Verzeichnis, in dem jeder Begriff aufgelistet ist.
+Alle Zeilen aus der Tabelle, die den Suchbegriff beinhalten, werden an den Begriff geknüpft. Stellt man nun eine Suchabfrage, 
+ist die Laufzeit deutlich kürzer, da nicht mehr alle Zeilen in der Tabelle mit der Abfrage verglichen werden. 
+Die Abfrage sucht nun nach der Stelle im Index und gleicht diese Zeilen mit der Abfrage ab.
+UPDATE Befehle dauern allerdings deutlich länger, da nach der Änderung ein neues Indexverzeichnis erstellt wird.
+
